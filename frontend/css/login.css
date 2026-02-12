@@ -1,12 +1,10 @@
 /* ====================================
-   LOGIN STYLES - Nubeware Enterprise
-   Diseño corporativo para gestión de contratos
+   LOGIN STYLES - Nubeware Enterprise (Customized)
    ==================================== */
 
 :root {
-  --nubeware-primary: #2563eb;
-  --nubeware-primary-dark: #1e4bb3;
-  --nubeware-gradient: linear-gradient(135deg, #2563eb 0%, #4f46e5 100%);
+  --nubeware-primary: #0a3a5c;
+  --nubeware-primary-dark: #0e4a6e;
   --nubeware-success: #059669;
   --nubeware-warning: #d97706;
   --nubeware-danger: #dc2626;
@@ -21,10 +19,18 @@
   --nubeware-gray-800: #1f2937;
   --nubeware-gray-900: #111827;
   --shadow-nubeware: 0 10px 25px -5px rgba(0, 0, 0, 0.05), 0 8px 10px -6px rgba(0, 0, 0, 0.02);
-  --shadow-nubeware-lg: 0 20px 30px -10px rgba(37, 99, 235, 0.15);
-  --border-radius-nubeware: 16px;
-  --border-radius-nubeware-sm: 12px;
   --font-nubeware: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: var(--font-nubeware);
+  background-color: var(--nubeware-gray-50);
 }
 
 /* ===== LAYOUT PRINCIPAL ===== */
@@ -32,13 +38,12 @@
   display: flex;
   min-height: 100vh;
   background-color: white;
-  font-family: var(--font-nubeware);
 }
 
 /* ===== BRANDING SECTION ===== */
 .login-branding {
-  flex: 1;
-  background: linear-gradient(145deg, #0a3a5c 0%, #1a4b6d 100%);
+  flex: 1.2;
+  background: linear-gradient(135deg, #0a3a5c 0%, #1e5b7a 100%);
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -48,101 +53,67 @@
   overflow: hidden;
 }
 
-.login-branding::after {
-  content: '';
-  position: absolute;
-  bottom: -10%;
-  right: -10%;
-  width: 500px;
-  height: 500px;
-  background: radial-gradient(circle, rgba(255, 255, 255, 0.08) 0%, transparent 70%);
-  border-radius: 50%;
-}
-
-.login-branding::before {
-  content: '';
-  position: absolute;
-  top: -20%;
-  left: -10%;
-  width: 300px;
-  height: 300px;
-  background: radial-gradient(circle, rgba(255, 255, 255, 0.05) 0%, transparent 70%);
-  border-radius: 50%;
-}
-
-/* ===== LOGO NUBEWARE ===== */
 .brand-logo {
   display: flex;
   align-items: center;
   gap: 1rem;
   margin-bottom: 3rem;
   z-index: 10;
-  position: relative;
 }
 
 .logo-box {
-  width: 56px;
-  height: 56px;
-  background: rgba(255, 255, 255, 0.12);
+  width: 50px;
+  height: 50px;
+  background: rgba(255, 255, 255, 0.15);
   backdrop-filter: blur(8px);
-  border: 1px solid rgba(255, 255, 255, 0.25);
-  border-radius: 14px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 12px;
   display: flex;
   align-items: center;
   justify-content: center;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
 
 .brand-name {
   font-size: 1.75rem;
   font-weight: 700;
   letter-spacing: -0.02em;
-  color: white;
   font-family: 'Outfit', 'Inter', sans-serif;
 }
 
 .brand-tag {
   display: inline-block;
-  padding: 0.25rem 0.75rem;
-  background: rgba(255, 255, 255, 0.15);
-  border-radius: 30px;
-  font-size: 0.7rem;
-  font-weight: 600;
+  padding: 0.2rem 0.6rem;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 4px;
+  font-size: 0.65rem;
+  font-weight: 700;
   text-transform: uppercase;
-  letter-spacing: 0.5px;
   margin-left: 0.5rem;
   border: 1px solid rgba(255, 255, 255, 0.2);
 }
 
-/* ===== HERO TEXT ===== */
 .hero-text {
-  position: relative;
   z-index: 10;
-  max-width: 550px;
+  max-width: 500px;
 }
 
 .hero-text h1 {
-  font-size: 3.25rem;
+  font-size: 3rem;
   line-height: 1.1;
   margin-bottom: 1.5rem;
-  color: white;
   font-weight: 800;
   font-family: 'Outfit', 'Inter', sans-serif;
-  letter-spacing: -0.02em;
 }
 
 .hero-text p {
-  font-size: 1.2rem;
-  color: rgba(255, 255, 255, 0.85);
-  max-width: 500px;
+  font-size: 1.1rem;
+  color: rgba(255, 255, 255, 0.8);
   line-height: 1.6;
-  font-weight: 400;
 }
 
-/* ===== FEATURE BADGES ===== */
 .feature-badges {
   display: flex;
-  gap: 1rem;
+  gap: 0.75rem;
   margin-top: 2.5rem;
   flex-wrap: wrap;
 }
@@ -150,20 +121,17 @@
 .feature-badge {
   display: flex;
   align-items: center;
-  gap: 0.5rem;
   padding: 0.5rem 1rem;
-  background: rgba(255, 255, 255, 0.1);
-  border-radius: 30px;
-  font-size: 0.85rem;
+  background: rgba(255, 255, 255, 0.08);
+  border-radius: 6px;
+  font-size: 0.8rem;
   font-weight: 500;
-  color: white;
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  backdrop-filter: blur(4px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 /* ===== FORM SECTION ===== */
 .login-form-area {
-  flex: 1;
+  flex: 0.8;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -173,16 +141,12 @@
 
 .login-card {
   width: 100%;
-  max-width: 440px;
-  background: white;
+  max-width: 400px;
   padding: 2.5rem;
-  border-radius: 24px;
-  box-shadow: 0 20px 35px -10px rgba(0, 0, 0, 0.05);
-  border: 1px solid var(--nubeware-gray-200);
 }
 
 .login-header {
-  margin-bottom: 2rem;
+  margin-bottom: 2.5rem;
 }
 
 .login-header h2 {
@@ -190,188 +154,83 @@
   font-weight: 700;
   color: var(--nubeware-gray-900);
   margin-bottom: 0.5rem;
-  letter-spacing: -0.02em;
-  font-family: 'Outfit', 'Inter', sans-serif;
 }
 
 .login-header p {
-  color: var(--nubeware-gray-600);
-  font-weight: 450;
-  font-size: 1rem;
+  color: var(--nubeware-gray-500);
+  font-size: 0.95rem;
 }
 
-/* ===== FORM CONTROLS ===== */
 .form-group {
   margin-bottom: 1.5rem;
 }
 
 .form-group label {
   display: block;
-  font-size: 0.85rem;
-  font-weight: 600;
-  color: var(--nubeware-gray-700);
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: var(--nubeware-gray-500);
   margin-bottom: 0.5rem;
   text-transform: uppercase;
-  letter-spacing: 0.3px;
-}
-
-.input-wrapper {
-  position: relative;
-  display: flex;
-  align-items: center;
-}
-
-.input-wrapper i.field-icon {
-  position: absolute;
-  left: 14px;
-  color: var(--nubeware-gray-400);
-  pointer-events: none;
-  transition: color 0.2s;
+  letter-spacing: 0.5px;
 }
 
 .form-control {
   width: 100%;
-  height: 54px;
-  padding: 0 1rem 0 45px;
+  height: 50px;
+  padding: 0 1rem;
   background: var(--nubeware-gray-50);
-  border: 1px solid var(--nubeware-gray-300);
-  border-radius: 12px;
-  font-size: 0.95rem;
-  transition: all 0.2s ease;
-  color: var(--nubeware-gray-900);
-  font-family: var(--font-nubeware);
+  border: 1px solid var(--nubeware-gray-200);
+  border-radius: 8px;
+  font-size: 1rem;
+  transition: all 0.2s;
 }
 
 .form-control:focus {
   outline: none;
-  border-color: #0a3a5c;
+  border-color: var(--nubeware-primary);
   background: white;
-  box-shadow: 0 0 0 4px rgba(10, 58, 92, 0.08);
+  box-shadow: 0 0 0 4px rgba(10, 58, 92, 0.05);
 }
 
-.form-control:focus + i.field-icon {
-  color: #0a3a5c;
-}
-
-/* ===== PASSWORD TOGGLE ===== */
-.toggle-password {
-  position: absolute;
-  right: 12px;
-  height: 36px;
-  width: 36px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: transparent;
-  border: none;
-  color: var(--nubeware-gray-500);
-  cursor: pointer;
-  border-radius: 8px;
-  transition: all 0.2s;
-}
-
-.toggle-password:hover {
-  color: #0a3a5c;
-  background: rgba(10, 58, 92, 0.06);
-}
-
-/* ===== BUTTONS ===== */
 .btn-login {
   width: 100%;
   height: 54px;
-  margin-top: 1.5rem;
-  font-size: 1rem;
-  font-weight: 600;
-  background: #0a3a5c;
+  background: var(--nubeware-primary);
   color: white;
   border: none;
-  border-radius: 12px;
+  border-radius: 8px;
+  font-size: 0.95rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  cursor: pointer;
+  transition: all 0.2s;
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 0.75rem;
-  transition: all 0.2s ease;
-  cursor: pointer;
 }
 
 .btn-login:hover {
-  background: #0e4a6e;
+  background: var(--nubeware-primary-dark);
   transform: translateY(-1px);
-  box-shadow: 0 8px 16px -4px rgba(10, 58, 92, 0.2);
 }
 
-.btn-login i {
-  transition: transform 0.2s ease;
-}
-
-.btn-login:hover i {
-  transform: translateX(4px);
-}
-
-/* ===== LINKS ===== */
 .login-footer {
   margin-top: 2rem;
   text-align: center;
-  color: var(--nubeware-gray-500);
   font-size: 0.85rem;
+  color: var(--nubeware-gray-500);
 }
 
 .login-footer a {
-  color: #0a3a5c;
+  color: var(--nubeware-primary);
   text-decoration: none;
   font-weight: 600;
-  transition: color 0.2s;
-}
-
-.login-footer a:hover {
-  color: #0e4a6e;
-  text-decoration: underline;
-}
-
-/* ===== DIVIDER ===== */
-.divider {
-  display: flex;
-  align-items: center;
-  gap: 1rem;
-  margin: 1.5rem 0;
-  color: var(--nubeware-gray-400);
-  font-size: 0.8rem;
-  text-transform: uppercase;
-  font-weight: 600;
-}
-
-.divider-line {
-  flex: 1;
-  height: 1px;
-  background: var(--nubeware-gray-200);
 }
 
 /* ===== RESPONSIVE ===== */
 @media (max-width: 1024px) {
-  .login-branding {
-    display: none;
-  }
-  
-  .login-form-area {
-    padding: 2rem;
-  }
-  
-  .login-card {
-    max-width: 100%;
-    padding: 2rem;
-  }
-}
-
-@media (max-width: 640px) {
-  .login-form-area {
-    padding: 1.5rem;
-  }
-  
-  .login-card {
-    padding: 1.5rem;
-  }
-  
-  .login-header h2 {
-    font-size: 1.75rem;
-  }
+  .login-branding { display: none; }
+  .login-form-area { flex: 1; padding: 2rem; }
 }

@@ -39,8 +39,8 @@ async function request(endpoint, method, body = null, isMultipart = false) {
             // Token expirado o inválido
             localStorage.removeItem('access_token');
             localStorage.removeItem('user');
-            if (window.location.pathname !== '/login.html') {
-                window.location.href = 'login.html';
+            if (!window.location.pathname.endsWith('index.html') && window.location.pathname !== '/') {
+                window.location.href = 'index.html';
             }
             throw new Error('Sesión expirada');
         }
