@@ -1,0 +1,377 @@
+/* ====================================
+   LOGIN STYLES - Nubeware Enterprise
+   Diseño corporativo para gestión de contratos
+   ==================================== */
+
+:root {
+  --nubeware-primary: #2563eb;
+  --nubeware-primary-dark: #1e4bb3;
+  --nubeware-gradient: linear-gradient(135deg, #2563eb 0%, #4f46e5 100%);
+  --nubeware-success: #059669;
+  --nubeware-warning: #d97706;
+  --nubeware-danger: #dc2626;
+  --nubeware-gray-50: #f9fafb;
+  --nubeware-gray-100: #f3f4f6;
+  --nubeware-gray-200: #e5e7eb;
+  --nubeware-gray-300: #d1d5db;
+  --nubeware-gray-400: #9ca3af;
+  --nubeware-gray-500: #6b7280;
+  --nubeware-gray-600: #4b5563;
+  --nubeware-gray-700: #374151;
+  --nubeware-gray-800: #1f2937;
+  --nubeware-gray-900: #111827;
+  --shadow-nubeware: 0 10px 25px -5px rgba(0, 0, 0, 0.05), 0 8px 10px -6px rgba(0, 0, 0, 0.02);
+  --shadow-nubeware-lg: 0 20px 30px -10px rgba(37, 99, 235, 0.15);
+  --border-radius-nubeware: 16px;
+  --border-radius-nubeware-sm: 12px;
+  --font-nubeware: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+}
+
+/* ===== LAYOUT PRINCIPAL ===== */
+.login-wrapper {
+  display: flex;
+  min-height: 100vh;
+  background-color: white;
+  font-family: var(--font-nubeware);
+}
+
+/* ===== BRANDING SECTION ===== */
+.login-branding {
+  flex: 1;
+  background: linear-gradient(145deg, #0a3a5c 0%, #1a4b6d 100%);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 4rem 6rem;
+  color: white;
+  position: relative;
+  overflow: hidden;
+}
+
+.login-branding::after {
+  content: '';
+  position: absolute;
+  bottom: -10%;
+  right: -10%;
+  width: 500px;
+  height: 500px;
+  background: radial-gradient(circle, rgba(255, 255, 255, 0.08) 0%, transparent 70%);
+  border-radius: 50%;
+}
+
+.login-branding::before {
+  content: '';
+  position: absolute;
+  top: -20%;
+  left: -10%;
+  width: 300px;
+  height: 300px;
+  background: radial-gradient(circle, rgba(255, 255, 255, 0.05) 0%, transparent 70%);
+  border-radius: 50%;
+}
+
+/* ===== LOGO NUBEWARE ===== */
+.brand-logo {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 3rem;
+  z-index: 10;
+  position: relative;
+}
+
+.logo-box {
+  width: 56px;
+  height: 56px;
+  background: rgba(255, 255, 255, 0.12);
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  border-radius: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.brand-name {
+  font-size: 1.75rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: white;
+  font-family: 'Outfit', 'Inter', sans-serif;
+}
+
+.brand-tag {
+  display: inline-block;
+  padding: 0.25rem 0.75rem;
+  background: rgba(255, 255, 255, 0.15);
+  border-radius: 30px;
+  font-size: 0.7rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-left: 0.5rem;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+/* ===== HERO TEXT ===== */
+.hero-text {
+  position: relative;
+  z-index: 10;
+  max-width: 550px;
+}
+
+.hero-text h1 {
+  font-size: 3.25rem;
+  line-height: 1.1;
+  margin-bottom: 1.5rem;
+  color: white;
+  font-weight: 800;
+  font-family: 'Outfit', 'Inter', sans-serif;
+  letter-spacing: -0.02em;
+}
+
+.hero-text p {
+  font-size: 1.2rem;
+  color: rgba(255, 255, 255, 0.85);
+  max-width: 500px;
+  line-height: 1.6;
+  font-weight: 400;
+}
+
+/* ===== FEATURE BADGES ===== */
+.feature-badges {
+  display: flex;
+  gap: 1rem;
+  margin-top: 2.5rem;
+  flex-wrap: wrap;
+}
+
+.feature-badge {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 1rem;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 30px;
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: white;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(4px);
+}
+
+/* ===== FORM SECTION ===== */
+.login-form-area {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 4rem;
+  background: white;
+}
+
+.login-card {
+  width: 100%;
+  max-width: 440px;
+  background: white;
+  padding: 2.5rem;
+  border-radius: 24px;
+  box-shadow: 0 20px 35px -10px rgba(0, 0, 0, 0.05);
+  border: 1px solid var(--nubeware-gray-200);
+}
+
+.login-header {
+  margin-bottom: 2rem;
+}
+
+.login-header h2 {
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--nubeware-gray-900);
+  margin-bottom: 0.5rem;
+  letter-spacing: -0.02em;
+  font-family: 'Outfit', 'Inter', sans-serif;
+}
+
+.login-header p {
+  color: var(--nubeware-gray-600);
+  font-weight: 450;
+  font-size: 1rem;
+}
+
+/* ===== FORM CONTROLS ===== */
+.form-group {
+  margin-bottom: 1.5rem;
+}
+
+.form-group label {
+  display: block;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--nubeware-gray-700);
+  margin-bottom: 0.5rem;
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+}
+
+.input-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.input-wrapper i.field-icon {
+  position: absolute;
+  left: 14px;
+  color: var(--nubeware-gray-400);
+  pointer-events: none;
+  transition: color 0.2s;
+}
+
+.form-control {
+  width: 100%;
+  height: 54px;
+  padding: 0 1rem 0 45px;
+  background: var(--nubeware-gray-50);
+  border: 1px solid var(--nubeware-gray-300);
+  border-radius: 12px;
+  font-size: 0.95rem;
+  transition: all 0.2s ease;
+  color: var(--nubeware-gray-900);
+  font-family: var(--font-nubeware);
+}
+
+.form-control:focus {
+  outline: none;
+  border-color: #0a3a5c;
+  background: white;
+  box-shadow: 0 0 0 4px rgba(10, 58, 92, 0.08);
+}
+
+.form-control:focus + i.field-icon {
+  color: #0a3a5c;
+}
+
+/* ===== PASSWORD TOGGLE ===== */
+.toggle-password {
+  position: absolute;
+  right: 12px;
+  height: 36px;
+  width: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  border: none;
+  color: var(--nubeware-gray-500);
+  cursor: pointer;
+  border-radius: 8px;
+  transition: all 0.2s;
+}
+
+.toggle-password:hover {
+  color: #0a3a5c;
+  background: rgba(10, 58, 92, 0.06);
+}
+
+/* ===== BUTTONS ===== */
+.btn-login {
+  width: 100%;
+  height: 54px;
+  margin-top: 1.5rem;
+  font-size: 1rem;
+  font-weight: 600;
+  background: #0a3a5c;
+  color: white;
+  border: none;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  transition: all 0.2s ease;
+  cursor: pointer;
+}
+
+.btn-login:hover {
+  background: #0e4a6e;
+  transform: translateY(-1px);
+  box-shadow: 0 8px 16px -4px rgba(10, 58, 92, 0.2);
+}
+
+.btn-login i {
+  transition: transform 0.2s ease;
+}
+
+.btn-login:hover i {
+  transform: translateX(4px);
+}
+
+/* ===== LINKS ===== */
+.login-footer {
+  margin-top: 2rem;
+  text-align: center;
+  color: var(--nubeware-gray-500);
+  font-size: 0.85rem;
+}
+
+.login-footer a {
+  color: #0a3a5c;
+  text-decoration: none;
+  font-weight: 600;
+  transition: color 0.2s;
+}
+
+.login-footer a:hover {
+  color: #0e4a6e;
+  text-decoration: underline;
+}
+
+/* ===== DIVIDER ===== */
+.divider {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin: 1.5rem 0;
+  color: var(--nubeware-gray-400);
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  font-weight: 600;
+}
+
+.divider-line {
+  flex: 1;
+  height: 1px;
+  background: var(--nubeware-gray-200);
+}
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 1024px) {
+  .login-branding {
+    display: none;
+  }
+  
+  .login-form-area {
+    padding: 2rem;
+  }
+  
+  .login-card {
+    max-width: 100%;
+    padding: 2rem;
+  }
+}
+
+@media (max-width: 640px) {
+  .login-form-area {
+    padding: 1.5rem;
+  }
+  
+  .login-card {
+    padding: 1.5rem;
+  }
+  
+  .login-header h2 {
+    font-size: 1.75rem;
+  }
+}

@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Detalles del Cliente | ContraLog</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/dashboard.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <style>
+        body {
+            background-color: #f8fafc;
+            display: flex;
+            justify-content: center;
+            padding: 2rem;
+            min-height: 100vh;
+        }
+
+        .detalle-container {
+            width: 100%;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .header-actions {
+            display: flex;
+            justify-content: flex-end;
+            margin-bottom: 1rem;
+        }
+
+        .section-header {
+            margin: 0 0 1.5rem 0;
+            color: var(--text-main);
+            font-size: 1.1rem;
+            border-bottom: 2px solid var(--border);
+            padding-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .info-row {
+            margin-bottom: 1.25rem;
+        }
+
+        .info-label {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 0.25rem;
+        }
+
+        .info-value {
+            font-size: 1rem;
+            color: var(--text-main);
+            font-weight: 500;
+        }
+
+        .contract-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem;
+            background: var(--bg-main);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            text-decoration: none;
+            transition: all 0.2s ease;
+            margin-bottom: 0.75rem;
+        }
+
+        .contract-item:hover {
+            border-color: var(--primary);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="detalle-container animate-fade">
+        <div class="header-actions">
+            <button onclick="window.close()" class="btn btn-secondary"
+                style="background: white; color: var(--text-main); border: 1px solid var(--border);">
+                <i data-lucide="x"></i> Cerrar Vista
+            </button>
+        </div>
+
+        <div id="content-container">
+            <div class="loader-container"
+                style="height: 400px; background: white; border-radius: 12px; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);">
+                <div class="loader"></div>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/config.js"></script>
+    <script src="js/api.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            lucide.createIcons();
+            loadClienteDetails();
+        });
+
+        async function loadClienteDetails() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const codigo = urlParams.get('codigo');
+
+            if (!codigo) {
+                Swal.fire('Error', 'Código de cliente no especificado', 'error').then(() => window.close());
+                return;
+            }
+
+            try {
+                const cliente = await apiClient.get(`/clientes/codigo/${codigo}`);
+
+                // Normalizar contratos (ahora son simples arrays de strings)
+                // Convertimos cada código string en un objeto para el renderizado
+                const contratosNaturales = (cliente.contratos_naturales || []).map(code => ({ codigo: code, tipo: 'natural' }));
+                const contratosJuridicos = (cliente.contratos_juridicos || []).map(code => ({ codigo: code, tipo: 'juridico' }));
+
+                // Unimos las listas
+                const todosContratos = [...contratosNaturales, ...contratosJuridicos];
+
+                const html = `
+                    <div class="glass animate-slide-up" style="padding: 0; overflow: hidden;">
+                        <!-- Header -->
+                        <div style="background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%); padding: 2rem; color: white;">
+                             <div style="display: flex; justify-content: space-between; align-items: center;">
+                                <div>
+                                    <div style="display: flex; align-items: center; gap: 1rem; margin-bottom: 0.5rem;">
+                                        <span class="badge" style="background: rgba(255,255,255,0.2); color: white; border: none;">
+                                            ${cliente.tipo_persona === 'juridica' ? 'Persona Jurídica' : 'Persona Natural'}
+                                        </span>
+                                        <span class="badge ${cliente.activo ? 'status-activo' : 'status-inactivo'}" style="border: 1px solid rgba(255,255,255,0.3);">
+                                            ${cliente.activo ? 'Activo' : 'Inactivo'}
+                                        </span>
+                                    </div>
+                                    <h1 style="margin: 0; font-size: 1.75rem; font-weight: 700;">${cliente.nombre_o_razon_social}</h1>
+                                    <p style="margin: 0.5rem 0 0 0; opacity: 0.9; font-family: 'Inter', monospace; display: flex; align-items: center; gap: 0.5rem;">
+                                        <i data-lucide="hash" size="14"></i> ${cliente.codigo_unico}
+                                    </p>
+                                </div>
+                                <div style="text-align: right; opacity: 0.9; font-size: 0.85rem;">
+                                    <div>Registrado por: ${cliente.nombre_creador || 'Sistema'}</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div style="padding: 2rem;">
+                            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 3rem;">
+                                <!-- Column 1: Info Cliente -->
+                                <div>
+                                    <h3 class="section-header">
+                                        <i data-lucide="user" size="18" style="vertical-align: text-bottom;"></i> Información General
+                                    </h3>
+                                    
+                                    <div class="info-row">
+                                        <div class="info-label">Tipo de Identificación</div>
+                                        <div class="info-value" style="display: flex; align-items: center; gap: 0.5rem;">
+                                            <span style="text-transform: uppercase; background: var(--bg-main); padding: 2px 6px; border-radius: 4px; font-size: 0.8rem; border: 1px solid var(--border);">
+                                                ${cliente.tipo_identificacion}
+                                            </span>
+                                            ${cliente.identificacion}
+                                        </div>
+                                    </div>
+
+                                    <div class="info-row">
+                                        <div class="info-label">Email de Contacto</div>
+                                        <div class="info-value" style="color: var(--primary);">
+                                            <a href="mailto:${cliente.email_contacto}" style="text-decoration: none; color: inherit;">
+                                                <i data-lucide="mail" size="14" style="margin-right: 4px; vertical-align: middle;"></i>
+                                                ${cliente.email_contacto || 'No registrado'}
+                                            </a>
+                                        </div>
+                                    </div>
+
+                                    <div class="info-row">
+                                        <div class="info-label">Teléfono</div>
+                                        <div class="info-value">
+                                            <i data-lucide="phone" size="14" style="margin-right: 4px; vertical-align: middle; color: var(--text-muted);"></i>
+                                            ${cliente.telefono || 'No registrado'}
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Column 2: Contratos -->
+                                <div>
+                                    <h3 class="section-header">
+                                        <i data-lucide="files" size="18" style="vertical-align: text-bottom;"></i> Contratos Históricos (${todosContratos.length})
+                                    </h3>
+                                    
+                                    ${todosContratos.length > 0 ? `
+                                        <div style="display: flex; flex-direction: column; gap: 0.5rem; max-height: 500px; overflow-y: auto; padding-right: 5px;">
+                                            ${todosContratos.map(c => `
+                                                <div class="contract-item">
+                                                    <div style="flex: 1;">
+                                                        <div style="display: flex; align-items: center; gap: 0.75rem;">
+                                                            <i data-lucide="file-text" size="16" style="color: var(--primary);"></i>
+                                                            <div style="font-weight: 600; color: var(--text-main); font-size: 0.95rem; font-family: monospace;">${c.codigo}</div>
+                                                        </div>
+                                                        <div style="font-size: 0.75rem; color: var(--text-muted); margin-top: 0.25rem; margin-left: 1.7rem;">
+                                                            ${c.tipo === 'juridico' ? 'Contrato Jurídico' : 'Contrato Natural'}
+                                                        </div>
+                                                    </div>
+                                                    
+                                                    <a href="contrato-detalle.html?codigo=${c.codigo}&tipo=${c.tipo}" target="_blank" 
+                                                       class="btn btn-sm btn-ghost" style="color: var(--primary);">
+                                                        Ver Detalle <i data-lucide="arrow-right" size="14"></i>
+                                                    </a>
+                                                </div>
+                                            `).join('')}
+                                        </div>
+                                    ` : `
+                                        <div style="text-align: center; padding: 2rem; color: var(--text-muted); border: 2px dashed var(--border); border-radius: 8px;">
+                                            <i data-lucide="file-x" size="32" style="opacity: 0.5;"></i>
+                                            <p style="margin-top: 0.5rem;">No hay contratos asociados</p>
+                                        </div>
+                                    `}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                `;
+
+                document.getElementById('content-container').innerHTML = html;
+                lucide.createIcons();
+
+            } catch (error) {
+                console.error('Error cargando cliente:', error);
+                document.getElementById('content-container').innerHTML = `
+                    <div style="text-align: center; padding: 3rem; color: var(--danger); background: white; border-radius: 12px; border: 1px solid var(--border);">
+                        <i data-lucide="alert-triangle" size="48"></i>
+                        <h3>Error cargando información</h3>
+                        <p>${error.message || 'No se pudo conectar con el servidor'}</p>
+                    </div>
+                `;
+                lucide.createIcons();
+            }
+        }
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,529 @@
+/* ====================================
+   CONTRATO DETALLE STYLES - NUBEWARE
+   Header gris claro, timeline moderno, español Colombia
+   ==================================== */
+
+:root {
+  --nubeware-primary: #0a3a5c;
+  --nubeware-primary-dark: #0e4a6e;
+  --nubeware-success: #059669;
+  --nubeware-warning: #d97706;
+  --nubeware-danger: #dc2626;
+  --nubeware-gray-50: #f8fafc;
+  --nubeware-gray-100: #f1f5f9;
+  --nubeware-gray-200: #e2e8f0;
+  --nubeware-gray-300: #cbd5e1;
+  --nubeware-gray-400: #94a3b8;
+  --nubeware-gray-500: #64748b;
+  --nubeware-gray-600: #475569;
+  --nubeware-gray-700: #334155;
+  --nubeware-gray-800: #1e293b;
+  --nubeware-gray-900: #0f172a;
+  --border-nubeware: 1px solid #e2e8f0;
+}
+
+/* ===== RESET COMPLETO ===== */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  background-color: white;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  color: var(--nubeware-gray-800);
+  line-height: 1.5;
+  width: 100%;
+  min-height: 100vh;
+}
+
+/* ===== CONTAINER - ANCHO COMPLETO ===== */
+.enterprise-container {
+  width: 100%;
+  max-width: none;
+  margin: 0;
+  padding: 0;
+  background: white;
+}
+
+/* ===== HEADER - GRIS CLARO ===== */
+.enterprise-header {
+  background: var(--nubeware-gray-100);
+  padding: 1.25rem 2rem;
+  width: 100%;
+  border-bottom: var(--border-nubeware);
+}
+
+.enterprise-header-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  max-width: 1440px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+.enterprise-title-section {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.enterprise-contract-title {
+  margin: 0;
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: var(--nubeware-gray-900);
+  letter-spacing: -0.01em;
+  line-height: 1.2;
+}
+
+.enterprise-contract-code {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: var(--nubeware-gray-600);
+  font-size: 0.85rem;
+  font-family: monospace;
+}
+
+/* ===== ESTADOS HEADER ===== */
+.enterprise-status-header {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.25rem 0.75rem;
+  background: white;
+  color: var(--nubeware-gray-700);
+  font-size: 0.7rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+  border: var(--border-nubeware);
+}
+
+.enterprise-status-header.pendiente {
+  background: #fffbeb;
+  color: #d97706;
+  border-color: #fed7aa;
+}
+
+.enterprise-status-header.activo {
+  background: #ecfdf5;
+  color: #059669;
+  border-color: #a7d7a7;
+}
+
+.enterprise-status-header.vencido {
+  background: #fef2f2;
+  color: #dc2626;
+  border-color: #fecaca;
+}
+
+/* ===== CONTENIDO PRINCIPAL ===== */
+.enterprise-content {
+  padding: 2rem;
+  max-width: 1440px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+/* ===== BREADCRUMB ===== */
+.enterprise-breadcrumb {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 2rem;
+  font-size: 0.85rem;
+  color: var(--nubeware-gray-500);
+}
+
+.enterprise-breadcrumb a {
+  color: var(--nubeware-gray-600);
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.enterprise-breadcrumb a:hover {
+  color: var(--nubeware-primary);
+  text-decoration: underline;
+}
+
+.enterprise-breadcrumb span {
+  color: var(--nubeware-gray-800);
+  font-weight: 600;
+}
+
+/* ===== GRID PRINCIPAL - 2 COLUMNAS ===== */
+.enterprise-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+}
+
+/* ===== SECCIÓN TIPO CONTRATO ===== */
+.enterprise-type-section {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 1.5rem;
+}
+
+.enterprise-type-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.25rem 0.75rem;
+  background: var(--nubeware-gray-100);
+  color: var(--nubeware-gray-700);
+  font-size: 0.7rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+  border: var(--border-nubeware);
+}
+
+.enterprise-section-subtitle {
+  font-size: 0.9rem;
+  color: var(--nubeware-gray-600);
+}
+
+/* ===== CALENDARIO DE VENCIMIENTOS ===== */
+.enterprise-calendar {
+  background: white;
+  border: var(--border-nubeware);
+  padding: 1.25rem;
+  margin-bottom: 2rem;
+}
+
+.enterprise-calendar-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.enterprise-calendar-title {
+  font-size: 0.85rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+  color: var(--nubeware-gray-700);
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.enterprise-calendar-year {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: var(--nubeware-gray-800);
+}
+
+.enterprise-calendar-grid {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 0.5rem;
+}
+
+.enterprise-calendar-month {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.25rem;
+  font-size: 0.75rem;
+  color: var(--nubeware-gray-600);
+  font-weight: 500;
+}
+
+.enterprise-calendar-month.active {
+  color: var(--nubeware-primary);
+  font-weight: 700;
+}
+
+.enterprise-calendar-month.current {
+  position: relative;
+  color: var(--nubeware-danger);
+  font-weight: 700;
+}
+
+.enterprise-calendar-marker {
+  width: 6px;
+  height: 6px;
+  background: var(--nubeware-danger);
+  border-radius: 50%;
+  margin-top: 0.25rem;
+}
+
+.enterprise-calendar-rentabilidad {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-top: 1rem;
+  padding-top: 0.75rem;
+  border-top: var(--border-nubeware);
+  font-size: 0.8rem;
+  color: var(--nubeware-gray-700);
+}
+
+/* ===== INFO GRID ===== */
+.enterprise-info-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+
+.enterprise-info-item {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  padding: 0.75rem 0;
+  border-bottom: var(--border-nubeware);
+}
+
+.enterprise-info-label {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.65rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+  color: var(--nubeware-gray-500);
+}
+
+.enterprise-info-value {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 1rem;
+  font-weight: 500;
+  color: var(--nubeware-gray-800);
+}
+
+.enterprise-info-subvalue {
+  font-size: 0.8rem;
+  color: var(--nubeware-gray-500);
+  margin-left: 1.5rem;
+}
+
+/* ===== TIMELINE MODERNO - SIN CUADROS ===== */
+.enterprise-timeline-moderno {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  margin-top: 1rem;
+}
+
+.enterprise-timeline-item-moderno {
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem;
+  padding: 1rem 0;
+  border-bottom: var(--border-nubeware);
+}
+
+.enterprise-timeline-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  background: white;
+  border: var(--border-nubeware);
+  color: var(--nubeware-gray-500);
+}
+
+.enterprise-timeline-icon.active {
+  background: var(--nubeware-success);
+  color: white;
+  border-color: var(--nubeware-success);
+}
+
+.enterprise-timeline-icon.warning {
+  background: var(--nubeware-warning);
+  color: white;
+  border-color: var(--nubeware-warning);
+}
+
+.enterprise-timeline-content-moderno {
+  flex: 1;
+}
+
+.enterprise-timeline-title-moderno {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--nubeware-gray-800);
+  margin-bottom: 0.25rem;
+}
+
+.enterprise-timeline-desc-moderno {
+  font-size: 0.8rem;
+  color: var(--nubeware-gray-600);
+  margin-bottom: 0.15rem;
+}
+
+.enterprise-timeline-meta {
+  font-size: 0.7rem;
+  color: var(--nubeware-gray-500);
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+}
+
+/* ===== DOCUMENTOS ===== */
+.enterprise-document-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  margin-top: 1rem;
+}
+
+.enterprise-document-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.75rem 1rem;
+  background: white;
+  border: var(--border-nubeware);
+  text-decoration: none;
+  border-left: 4px solid var(--nubeware-primary);
+}
+
+.enterprise-document-item:hover {
+  background: var(--nubeware-gray-50);
+}
+
+.enterprise-document-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  background: var(--nubeware-gray-50);
+  color: var(--nubeware-primary);
+  border: var(--border-nubeware);
+}
+
+.enterprise-document-info {
+  flex: 1;
+  margin-left: 1rem;
+}
+
+.enterprise-document-name {
+  font-weight: 600;
+  color: var(--nubeware-gray-800);
+  font-size: 0.9rem;
+}
+
+.enterprise-document-meta {
+  font-size: 0.7rem;
+  color: var(--nubeware-gray-500);
+  font-family: monospace;
+}
+
+.enterprise-document-action {
+  display: flex;
+  align-items: center;
+  gap: 0.375rem;
+  padding: 0.375rem 0.75rem;
+  background: white;
+  color: var(--nubeware-primary);
+  font-size: 0.7rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  border: var(--border-nubeware);
+}
+
+/* ===== SECCIÓN ADJUNTAR ===== */
+.enterprise-attach-section {
+  margin-top: 2rem;
+  padding: 1.25rem;
+  background: white;
+  border: var(--border-nubeware);
+  border-left: 4px solid var(--nubeware-primary);
+}
+
+.enterprise-attach-header {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 1rem;
+}
+
+.enterprise-attach-title {
+  font-size: 0.85rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+  color: var(--nubeware-gray-700);
+}
+
+.enterprise-attach-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 1rem;
+  background: var(--nubeware-primary);
+  color: white;
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  border: none;
+  cursor: pointer;
+}
+
+.enterprise-attach-button:hover {
+  background: var(--nubeware-primary-dark);
+}
+
+/* ===== LOADER ===== */
+.enterprise-loader {
+  background: white;
+  border: var(--border-nubeware);
+  padding: 3rem;
+  text-align: center;
+}
+
+.enterprise-spinner {
+  display: inline-block;
+  width: 40px;
+  height: 40px;
+  border: 2px solid var(--nubeware-gray-200);
+  border-top-color: var(--nubeware-primary);
+}
+
+@keyframes enterprise-spin {
+  to { transform: rotate(360deg); }
+}
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 768px) {
+  .enterprise-header {
+    padding: 1rem 1.25rem;
+  }
+  
+  .enterprise-header-content {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.75rem;
+  }
+  
+  .enterprise-content {
+    padding: 1.25rem;
+  }
+  
+  .enterprise-grid {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+  
+  .enterprise-calendar-grid {
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+}

@@ -1,0 +1,43 @@
+services:
+  # --- 1. BASE DE DATOS (MySQL) ---
+  # Se usa el puerto 3307 externo para no chocar con el MySQL local de la VM.
+  db:
+    image: mysql:8.0-debian
+    container_name: contralog_db
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: Contralog12345  # ¡No olvides esta clave!
+      MYSQL_DATABASE: contralog
+    ports:
+      - "3307:3306" # [Puerto Externo]:[Puerto Interno]
+    volumes:
+      - db_data:/var/lib/mysql # Persistencia: Si el contenedor muere, los datos viven.
+
+  # --- 2. BACKEND (Python/FastAPI) ---
+  # Se construye desde la carpeta ./backend donde estará el Dockerfile.
+  backend:
+    build: ./backend
+    container_name: contralog_back
+    restart: always
+    ports:
+      - "8000:8000"
+    depends_on:
+      - db # Espera a que la DB esté lista para arrancar.
+    environment:
+      DB_HOST: db # Se usa el nombre del servicio, no 'localhost'.
+      DB_USER: root
+      DB_PASS: Contralog12345 # Ajustado para que coincida con la DB de arriba.
+
+  # --- 3. FRONTEND (Nginx) ---
+  # Como el puerto 80 ya lo usa Apache, usaremos el 8080.
+  frontend:
+    image: nginx:alpine
+    container_name: contralog_front
+    restart: always
+    ports:
+      - "8080:80" # CAMBIO: Entrarás por http://tu-ip:8080
+    volumes:
+      - ./frontend:/usr/share/nginx/html # Sincroniza tu carpeta local con el servidor.
+
+volumes:
+  db_data: # Definición del volumen persistente para la base de datos.

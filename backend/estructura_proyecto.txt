@@ -1,0 +1,46 @@
+📁 Estructura del proyecto
+
+├── Dockerfile
+├── app
+│   ├── __init__.py
+│   ├── core
+│   │   ├── config.py
+│   │   ├── errors.py
+│   │   ├── exceptions.py
+│   │   ├── security.py
+│   ├── database.py
+│   ├── main.py
+│   ├── models
+│   │   ├── __init__.py
+│   │   ├── auditoria.py
+│   │   ├── auth.py
+│   │   ├── cliente.py
+│   │   ├── contrato.py
+│   │   ├── usuario.py
+│   ├── routes
+│   │   ├── __init__.py
+│   │   ├── auditoria.py
+│   │   ├── auth.py
+│   │   ├── clientes.py
+│   │   ├── contratos.py
+│   │   ├── usuarios.py
+│   ├── services
+│   │   ├── __init__.py
+│   │   ├── auditoria_service.py
+│   │   ├── auth_service.py
+│   │   ├── cliente_service.py
+│   │   ├── contrato_service.py
+│   │   ├── s3_service.py
+│   │   ├── usuario_service.py
+│   ├── utils
+│   │   ├── file_manager.py
+├── database.md
+├── estructura.py
+├── estructura_proyecto.txt
+├── requirements.txt
+├── uploads
+│   ├── juridicos
+│   │   ├── Comprobante_Transferencia_PSE1767195452931.pdf
+│   ├── naturales
+│   │   ├── cedula.pdf
+│   │   ├── examenes medicos.pdf
