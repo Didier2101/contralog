@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nuevo Contrato | ContraLog</title>
+    <link rel="icon"
+        href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>📄</text></svg>">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/dashboard.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <style>
+        .form-container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: white;
+            padding: 2rem;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        }
+
+        .page-header {
+            margin-bottom: 2rem;
+        }
+
+        .page-header h2 {
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+        }
+    </style>
+</head>
+
+<body class="dashboard-body">
+    <aside class="sidebar">
+        <div class="sidebar-header">
+            <div class="logo-box-sidebar"><i data-lucide="file-text" color="white"></i></div>
+            <span class="logo-text">ContraLog</span>
+        </div>
+        <nav class="sidebar-nav">
+            <div class="nav-section">Menú Principal</div>
+            <a href="dashboard.html" class="nav-link"><i data-lucide="arrow-left"></i><span>Volver al
+                    Dashboard</span></a>
+            <div class="nav-section">Contratos</div>
+            <a href="#" class="nav-link active"><i data-lucide="file-plus"></i><span>Nuevo Contrato</span></a>
+        </nav>
+        <div class="sidebar-footer">
+            <div class="user-profile">
+                <div class="user-avatar" id="userInitial">U</div>
+                <div class="user-info"><span class="user-name" id="userName">...</span><span class="user-role"
+                        id="userRole">...</span></div>
+            </div>
+        </div>
+    </aside>
+
+    <main class="main-content">
+        <div class="form-container animate-fade">
+            <div class="page-header">
+                <h2 id="pageTitle">Nuevo Contrato</h2>
+                <p>Cargue el contrato y complete los detalles requeridos.</p>
+            </div>
+
+            <form id="createContratoForm">
+                <div class="form-grid">
+                    <div class="form-group" style="grid-column: span 2;">
+                        <label>Seleccionar Cliente</label>
+                        <select id="c_id_cliente" class="form-control" required>
+                            <option value="">Cargando clientes...</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Fecha Inicio</label>
+                        <input type="date" id="c_fecha_inicio" class="form-control" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Fecha Final</label>
+                        <input type="date" id="c_fecha_final" class="form-control" required>
+                    </div>
+
+                    <div class="form-group" id="ndaContainer" style="grid-column: span 2; display: none;">
+                        <label>NDA Firmado</label>
+                        <select id="c_nda_firmado" class="form-control">
+                            <option value="false">No</option>
+                            <option value="true">Sí</option>
+                        </select>
+                    </div>
+
+                    <div class="dropzone" id="pdfDropzone" style="grid-column: span 2;">
+                        <i data-lucide="upload-cloud" size="32"></i>
+                        <div class="text">Arrastra el contrato (PDF) aquí o <b>haz clic para buscar</b></div>
+                        <input type="file" id="c_archivo" accept=".pdf" style="display: none;">
+                    </div>
+
+                    <div class="pdf-preview-container" id="pdfPreview" style="grid-column: span 2;">
+                        <div class="pdf-header">
+                            <span>Vista previa: <span id="fileName"></span></span>
+                            <button type="button" class="btn-icon" id="removeFile"
+                                style="width: 24px; height: 24px; color: var(--danger);">
+                                <i data-lucide="trash-2"></i>
+                            </button>
+                        </div>
+                        <iframe class="pdf-preview-iframe" id="pdfIframe"></iframe>
+                    </div>
+
+                    <!-- Pólizas Section (Juridical only) -->
+                    <div id="polizasSection"
+                        style="grid-column: span 2; margin-top: 1rem; padding-top: 1rem; border-top: 2px solid var(--border); display: none;">
+                        <div
+                            style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+                            <h4 style="margin: 0; color: var(--text-main);">
+                                <i data-lucide="shield" size="18"></i> Pólizas Adicionales (Opcional)
+                            </h4>
+                            <button type="button" class="btn btn-ghost btn-sm" id="addPolizaBtn">
+                                <i data-lucide="plus"></i> Agregar Póliza
+                            </button>
+                        </div>
+                        <div id="polizasContainer"></div>
+                    </div>
+                </div>
+
+                <div class="modal-footer" style="padding: 0; border: none; margin-top: 2rem; background: transparent;">
+                    <button type="button" class="btn btn-ghost"
+                        onclick="window.location.href='dashboard.html#contratos'">Cancelar</button>
+                    <button type="submit" class="btn btn-primary" id="submitContratoBtn">Crear Contrato</button>
+                </div>
+            </form>
+        </div>
+    </main>
+
+    <script src="js/config.js"></script>
+    <script src="js/api.js"></script>
+    <script src="js/auth.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const userStr = localStorage.getItem('user');
+            if (!userStr) window.location.href = 'login.html';
+            const user = JSON.parse(userStr);
+            document.getElementById('userName').textContent = user.nombre;
+            document.getElementById('userRole').textContent = user.rol;
+            document.getElementById('userInitial').textContent = user.nombre.charAt(0).toUpperCase();
+
+            // Get Type from URL
+            const urlParams = new URLSearchParams(window.location.search);
+            const tipo = urlParams.get('tipo') || 'natural'; // default to natural
+            const isJuridico = tipo === 'juridico';
+
+            // UI Adjustments based on Type
+            document.getElementById('pageTitle').textContent = `Nuevo Contrato ${isJuridico ? 'Jurídico' : 'Natural'}`;
+            if (isJuridico) {
+                document.getElementById('polizasSection').style.display = 'block';
+            } else {
+                document.getElementById('ndaContainer').style.display = 'block';
+            }
+            lucide.createIcons();
+
+            // Client Loading
+            const clientSelect = document.getElementById('c_id_cliente');
+            async function fetchClients() {
+                try {
+                    const data = await apiClient.get('/clientes/listar?pagina=1');
+                    clientSelect.innerHTML = '<option value="">-- Selecciona un cliente --</option>';
+                    data.forEach(cli => {
+                        const option = document.createElement('option');
+                        option.value = cli.id_cliente;
+                        option.textContent = `${cli.nombre_o_razon_social} (${cli.identificacion})`;
+                        clientSelect.appendChild(option);
+                    });
+                } catch (error) {
+                    clientSelect.innerHTML = '<option value="">Error cargando clientes</option>';
+                }
+            }
+            fetchClients();
+
+            // Validation on Client Select
+            clientSelect.addEventListener('change', async () => {
+                const id = clientSelect.value;
+                if (!id) return;
+                try {
+                    const cliente = await apiClient.get(`/clientes/${id}`);
+                    if (cliente.tipo_persona !== tipo) {
+                        Swal.fire({
+                            icon: 'warning',
+                            title: 'Tipo inconsistente',
+                            text: `Este cliente es de tipo '${cliente.tipo_persona}' y estás creando un contrato '${tipo}'.`,
+                            confirmButtonColor: 'var(--primary)'
+                        });
+                    }
+                } catch (e) { console.error(e); }
+            });
+
+            // File Handling
+            const dropzone = document.getElementById('pdfDropzone');
+            const fileInput = document.getElementById('c_archivo');
+            const preview = document.getElementById('pdfPreview');
+            const fileName = document.getElementById('fileName');
+            const pdfIframe = document.getElementById('pdfIframe');
+            const removeBtn = document.getElementById('removeFile');
+            let selectedFile = null;
+
+            dropzone.addEventListener('click', () => fileInput.click());
+            dropzone.addEventListener('dragover', (e) => { e.preventDefault(); dropzone.classList.add('dragover'); });
+            dropzone.addEventListener('dragleave', () => dropzone.classList.remove('dragover'));
+            dropzone.addEventListener('drop', (e) => {
+                e.preventDefault();
+                dropzone.classList.remove('dragover');
+                handleFile(e.dataTransfer.files[0]);
+            });
+            fileInput.addEventListener('change', (e) => handleFile(e.target.files[0]));
+            removeBtn.addEventListener('click', () => {
+                selectedFile = null;
+                fileInput.value = '';
+                preview.style.display = 'none'; // changed from classList.remove('show') as logic is manual
+                dropzone.style.display = 'flex';
+            });
+
+            function handleFile(file) {
+                if (!file) return;
+                if (file.type !== 'application/pdf') {
+                    Swal.fire('Error', 'Solo se permiten archivos PDF', 'warning');
+                    return;
+                }
+                selectedFile = file;
+                fileName.textContent = file.name;
+                const reader = new FileReader();
+                reader.onload = (e) => {
+                    pdfIframe.src = e.target.result;
+                    preview.style.display = 'block';
+                    dropzone.style.display = 'none';
+                };
+                reader.readAsDataURL(file);
+            }
+
+            // Polizas Logic
+            if (isJuridico) {
+                let polizaCounter = 0;
+                document.getElementById('addPolizaBtn').addEventListener('click', () => {
+                    const polizaId = `poliza_${polizaCounter++}`;
+                    const html = `
+                        <div class="poliza-item" id="${polizaId}" style="background: #f8fafc; padding: 1rem; border-radius: 8px; margin-bottom: 0.75rem; border: 1px solid var(--border);">
+                            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.75rem;">
+                                <strong>Póliza #${polizaCounter}</strong>
+                                <button type="button" class="btn-icon" onclick="document.getElementById('${polizaId}').remove()" style="color: var(--danger);"><i data-lucide="x" size="16"></i></button>
+                            </div>
+                            <div class="form-grid" style="gap: 0.75rem;">
+                                <div class="form-group">
+                                    <label>Tipo</label>
+                                    <select class="form-control poliza-tipo" required>
+                                        <option value="">Seleccionar...</option>
+                                        <option value="2">Póliza de Salarios</option>
+                                        <option value="3">Civil Extracontractual</option>
+                                        <option value="4">De Cumplimiento</option>
+                                        <option value="5">NDA</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label>Archivo PDF</label>
+                                    <input type="file" class="form-control poliza-archivo" accept=".pdf" required>
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                    document.getElementById('polizasContainer').insertAdjacentHTML('beforeend', html);
+                    lucide.createIcons();
+                });
+            }
+
+            // Submit
+            document.getElementById('createContratoForm').addEventListener('submit', async (e) => {
+                e.preventDefault();
+                if (!selectedFile) {
+                    Swal.fire('Atención', 'Debes cargar el archivo PDF del contrato', 'warning');
+                    return;
+                }
+
+                const submitBtn = document.getElementById('submitContratoBtn');
+                submitBtn.disabled = true;
+                submitBtn.innerHTML = '<span class="loader-mini"></span> Procesando...';
+
+                const formData = new FormData();
+                formData.append('id_cliente', document.getElementById('c_id_cliente').value);
+                formData.append('fecha_inicio', document.getElementById('c_fecha_inicio').value);
+                formData.append('fecha_final', document.getElementById('c_fecha_final').value);
+                formData.append('estado', 'pendiente');
+
+                if (isJuridico) {
+                    formData.append('contrato_pdf', selectedFile);
+                    const polizaItems = document.querySelectorAll('.poliza-item');
+                    polizaItems.forEach((item) => {
+                        const tipoSelect = item.querySelector('.poliza-tipo');
+                        const archivoInput = item.querySelector('.poliza-archivo');
+                        if (tipoSelect.value && archivoInput.files[0]) {
+                            formData.append('polizas', archivoInput.files[0]);
+                            formData.append('tipos_poliza', parseInt(tipoSelect.value));
+                        }
+                    });
+                } else {
+                    formData.append('archivo', selectedFile);
+                    formData.append('nda_firmado', document.getElementById('c_nda_firmado').value);
+                }
+
+                try {
+                    const endpoint = isJuridico ? '/contratos/juridico' : '/contratos/natural';
+                    await apiClient.postMultipart(endpoint, formData);
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Contrato creado',
+                        text: 'Registrado correctamente.',
+                        showConfirmButton: false,
+                        timer: 2000
+                    }).then(() => window.location.href = 'dashboard.html#contratos');
+                } catch (error) {
+                    Swal.fire('Error', error.message, 'error');
+                    submitBtn.disabled = false;
+                    submitBtn.textContent = 'Crear Contrato';
+                }
+            });
+        });
+    </script>
+</body>
+
+</html>

@@ -1,44 +1,33 @@
-import mysql.connector
-from mysql.connector import pooling
-import time
-from app.core.config import settings  # <--- Importamos tus variables de entorno
+from sqlalchemy import create_engine
+from sqlalchemy.ext.declarative import declarative_base
+from sqlalchemy.orm import sessionmaker
+from app.core.config import settings
 
-db_pool = None
+# 1. Construir la URL de conexión (SQLAlchemy usa este formato)
+# mysql+pymysql://usuario:password@host:puerto/nombre_db
+SQLALCHEMY_DATABASE_URL = (
+    f"mysql+pymysql://{settings.DB_USER}:{settings.DB_PASSWORD}@"
+    f"{settings.DB_HOST}:{settings.DB_PORT}/{settings.DB_NAME}"
+)
 
-def inicializar_pool():
-    global db_pool
-    
-    # Usamos los valores cargados desde el archivo .env a través de settings
-    host_db = settings.DB_HOST
-    port_db = settings.DB_PORT
-    user_db = settings.DB_USER
-    pass_db = settings.DB_PASSWORD
-    name_db = settings.DB_NAME
+# 2. Crear el Motor (Engine)
+# 'pool_recycle' evita el error de "MySQL server has gone away"
+engine = create_engine(
+    SQLALCHEMY_DATABASE_URL, 
+    pool_recycle=3600, 
+    pool_pre_ping=True
+)
 
-    for i in range(5):
-        try:
-            db_pool = mysql.connector.pooling.MySQLConnectionPool(
-                pool_name="contralog_pool",
-                pool_size=5,
-                host=host_db,
-                port=port_db,
-                user=user_db,
-                password=pass_db,
-                database=name_db
-            )
-            print(f"✅ Conexión exitosa a la base de datos en {host_db}:{port_db}")
-            return
-        except Exception as e:
-            print(f"❌ Intento {i+1}: Fallo en {host_db}:{port_db}. Detalle: {e}")
-            time.sleep(3)
+# 3. Crear la fábrica de sesiones
+SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 
-# Inicializamos el pool al cargar el módulo
-inicializar_pool()
+# 4. Clase base para los Modelos
+Base = declarative_base()
 
-def get_db_connection():
-    if db_pool is None:
-        # Re-intentamos inicializar si por alguna razón está vacío
-        inicializar_pool()
-        if db_pool is None:
-            raise Exception("El pool de conexiones no está inicializado.")
-    return db_pool.get_connection()
+# 5. Dependencia para FastAPI (La que usaremos en las rutas)
+def get_db():
+    db = SessionLocal()
+    try:
+        yield db
+    finally:
+        db.close()

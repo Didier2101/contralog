@@ -33,6 +33,7 @@
 │   │   ├── s3_service.py
 │   │   ├── usuario_service.py
 │   ├── utils
+│   │   ├── codigos.py
 │   │   ├── file_manager.py
 ├── database.md
 ├── estructura.py
@@ -40,7 +41,13 @@
 ├── requirements.txt
 ├── uploads
 │   ├── juridicos
+│   │   ├── 9213002721425CC1005854611C.pdf
+│   │   ├── 9213002721425CC1005854611C_Pro_OCR.pdf
 │   │   ├── Comprobante_Transferencia_PSE1767195452931.pdf
+│   │   ├── PAL0000001_ALGEBRA LINEAL_2026.pdf
 │   ├── naturales
 │   │   ├── cedula.pdf
 │   │   ├── examenes medicos.pdf
+│   ├── polizas
+│   │   ├── PAL0000001_ALGEBRA LINEAL_2026.pdf
+│   │   ├── cedula.pdf

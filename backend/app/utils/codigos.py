@@ -24,3 +24,11 @@ def generar_codigo_oportunidad():
 def generar_codigo_documento():
     """Genera códigos tipo DOC-2026-X89Z"""
     return generar_codigo_unico("DOC")
+
+def generar_codigo_usuario():
+    """Genera códigos tipo USR-2026-Y56W"""
+    return generar_codigo_unico("USR")
+
+def generar_codigo_cargo():
+    """Genera códigos tipo CRG-2026-Z12X"""
+    return generar_codigo_unico("CRG")
